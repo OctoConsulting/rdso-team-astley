@@ -35,7 +35,7 @@ pipeline {
 
         stage('install tools') {
             steps {
-                sh './mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v14.17.0 -DnpmVersion=6.14.13'
+                sh './mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm@install-node-and-npm'
             }
         }
 
@@ -58,7 +58,7 @@ pipeline {
                     } catch (err) {
                         throw err
                     } finally {
-                        junit '**/target/test-results/**/TEST-*.xml'
+                        junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
                     }
                 }
             }
@@ -73,11 +73,12 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test-ci'"
+                        sh 'npm install'
+                        sh 'npm test'
                     } catch (err) {
                         throw err
                     } finally {
-                        junit '**/target/test-results/**/TEST-*.xml'
+                        junit '**/target/test-results/TESTS-results-jest.xml'
                     }
                 }
             }
@@ -98,7 +99,7 @@ pipeline {
 
         stage('packaging') {
             steps {
-                sh './mvnw -ntp verify -P-webpack -Pprod -DskipTests'
+                sh './mvnw -ntp verify -P-webapp -Pprod -DskipTests'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }

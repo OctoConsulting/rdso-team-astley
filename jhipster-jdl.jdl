@@ -1,0 +1,51 @@
+
+application {
+  config {
+    baseName rmssGateway,
+    applicationType gateway,
+    packageName com.rmss,
+    authenticationType jwt,
+    prodDatabaseType postgreSQL,
+    clientFramework angular
+  }
+  entities None
+}
+
+application {
+  config {
+    baseName rmss,
+    applicationType microservice,
+    packageName com.rmss,
+    authenticationType jwt,
+    prodDatabaseType postgreSQL,
+  }
+  entities Song, Writer, Notes
+}
+
+
+entity Song(song) {
+	id UUID,
+    title String,
+    writer Writer,
+    performer String,
+    length Duration,
+    soundtrack String,
+    trackNumber Integer,
+    url String,
+}
+
+entity Writer {
+    id UUID,
+    name String,
+    songId UUID,
+}
+
+entity Notes {
+	id UUID,
+    userId UUID,
+    songId UUID,
+    note TextBlob,
+}
+
+
+    

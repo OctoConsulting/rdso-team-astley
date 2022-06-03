@@ -1,0 +1,103 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-song-heading" data-cy="SongCreateUpdateHeading">Create or edit a Song</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_writer">Writer</label>
+          <input type="text" class="form-control" name="writer" id="field_writer" data-cy="writer" formControlName="writer" />
+          <div *ngIf="editForm.get('writer')!.invalid && (editForm.get('writer')!.dirty || editForm.get('writer')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('writer')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_performer">Performer</label>
+          <input type="text" class="form-control" name="performer" id="field_performer" data-cy="performer" formControlName="performer" />
+          <div *ngIf="editForm.get('performer')!.invalid && (editForm.get('performer')!.dirty || editForm.get('performer')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('performer')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_length">Length</label>
+          <input type="text" class="form-control" name="length" id="field_length" data-cy="length" formControlName="length" />
+          <div *ngIf="editForm.get('length')!.invalid && (editForm.get('length')!.dirty || editForm.get('length')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('length')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('length')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_soundtrack">Soundtrack</label>
+          <input
+            type="text"
+            class="form-control"
+            name="soundtrack"
+            id="field_soundtrack"
+            data-cy="soundtrack"
+            formControlName="soundtrack"
+          />
+          <div *ngIf="editForm.get('soundtrack')!.invalid && (editForm.get('soundtrack')!.dirty || editForm.get('soundtrack')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('soundtrack')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trackNumber">Track Number</label>
+          <input
+            type="number"
+            class="form-control"
+            name="trackNumber"
+            id="field_trackNumber"
+            data-cy="trackNumber"
+            formControlName="trackNumber"
+          />
+          <div *ngIf="editForm.get('trackNumber')!.invalid && (editForm.get('trackNumber')!.dirty || editForm.get('trackNumber')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('trackNumber')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('trackNumber')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_url">Url</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

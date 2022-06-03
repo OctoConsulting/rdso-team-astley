@@ -1,0 +1,14 @@
+entity Song(song) {
+    title String required,
+    writer String required,
+    performer String required,
+    length Duration required,
+    soundtrack String required,
+    trackNumber Integer required,
+    url String,
+}
+
+
+
+
+    

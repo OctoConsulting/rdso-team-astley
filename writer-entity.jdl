@@ -1,0 +1,4 @@
+entity Writer {
+    name String,
+    songId Long,
+}

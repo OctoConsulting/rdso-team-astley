@@ -1,0 +1,5 @@
+entity Notes {
+    userId UUID,
+    songId Long,
+    note TextBlob,
+}

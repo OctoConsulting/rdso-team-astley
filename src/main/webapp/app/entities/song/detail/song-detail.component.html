@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="song">
+      <h2 data-cy="songDetailsHeading"><span>Song</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ song.id }}</span>
+        </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+          <span>{{ song.title }}</span>
+        </dd>
+        <dt><span>Writer</span></dt>
+        <dd>
+          <span>{{ song.writer }}</span>
+        </dd>
+        <dt><span>Performer</span></dt>
+        <dd>
+          <span>{{ song.performer }}</span>
+        </dd>
+        <dt><span>Length</span></dt>
+        <dd>
+          <span>{{ song.length | duration }} ({{ song.length }})</span>
+        </dd>
+        <dt><span>Soundtrack</span></dt>
+        <dd>
+          <span>{{ song.soundtrack }}</span>
+        </dd>
+        <dt><span>Track Number</span></dt>
+        <dd>
+          <span>{{ song.trackNumber }}</span>
+        </dd>
+        <dt><span>Url</span></dt>
+        <dd>
+          <span>{{ song.url }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/song', song.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

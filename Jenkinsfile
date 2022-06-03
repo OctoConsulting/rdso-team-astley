@@ -108,9 +108,9 @@ pipeline {
                 branch 'main'
             }
             steps {
-                withCredentials([string(credentialsId: 'REGISTRY_USERNAME', variable: 'REGISTRY_USERNAME'), string(credentialsId: 'REGISTRY_PASSWORD', variable: 'REGISTRY_PASSWORD')]) {                    // A pre-requisite to this step is to setup authentication to the docker registry
+                withCredentials([string(credentialsId: 'REGISTRY_USERNAME', variable: 'REGISTRY_USERNAME'), string(credentialsId: 'REGISTRY_PASSWORD', variable: 'REGISTRY_PASSWORD')]) {
                     // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-                    sh './mvnw -ntp jib:build -Djib.to.auth.username="${REGISTRY_USERNAME}" -Djib.to.auth.password="${REGISTRY_PASSWORD}"'
+                    sh './mvnw -ntp jib:build -Djib.to.auth.username="${REGISTRY_USERNAME}" -Djib.to.auth.password="${REGISTRY_PASSWORD}" -Djib.to.tags="$(git rev-parse --short HEAD)" -Djib.to.image="harbor.${JENKINS_URL#*.}library/fedhipster"'
                 }
             }
         }

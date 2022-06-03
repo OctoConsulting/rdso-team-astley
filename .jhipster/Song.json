@@ -1,0 +1,49 @@
+{
+  "applications": "*",
+  "changelogDate": "20220603144840",
+  "databaseType": "sql",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "song",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "writer",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "performer",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "length",
+      "fieldType": "Duration"
+    },
+    {
+      "fieldName": "soundtrack",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "trackNumber",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Song",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

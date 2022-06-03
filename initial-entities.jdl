@@ -1,0 +1,26 @@
+entity Song(song) {
+	id UUID,
+    title String,
+    writer String,
+    performer String,
+    length Duration,
+    soundtrack String,
+    trackNumber Integer,
+    url String,
+}
+
+entity Writer {
+    id UUID,
+    name String,
+    songId UUID,
+}
+
+entity Notes {
+	id UUID,
+    userId UUID,
+    songId UUID,
+    note TextBlob,
+}
+
+
+    

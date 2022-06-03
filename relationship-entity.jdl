@@ -1,0 +1,18 @@
+entity Song {    
+    title String,  
+    performer String,     
+    length Duration,     
+    soundtrack String,     
+    trackNumber Integer,     
+    url String, 
+    writer String
+}
+
+entity Notes {      
+    userId UUID,        
+    note TextBlob   
+}
+
+relationship OneToOne{
+ 	Notes{song} to Song{note}
+}

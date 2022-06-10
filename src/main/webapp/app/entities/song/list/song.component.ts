@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ISong } from '../song.model';
 import { SongService } from '../service/song.service';
 import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.component';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-song',
@@ -13,6 +14,7 @@ import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.componen
 export class SongComponent implements OnInit {
   songs?: ISong[];
   isLoading = false;
+  model = {performer: '', writer: ''};
 
   constructor(protected songService: SongService, protected modalService: NgbModal) {}
 
@@ -32,6 +34,8 @@ export class SongComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    this.model.performer = '';
+    this.model.writer = '';
   }
 
   trackId(_index: number, item: ISong): number {

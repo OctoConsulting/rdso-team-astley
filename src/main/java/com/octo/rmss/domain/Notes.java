@@ -27,6 +27,7 @@ public class Notes implements Serializable {
     private String note;
 
     @Transient
+    @JsonIgnoreProperties(value = { "notes" }, allowSetters = true)
     private Song song;
 
     @Column("song_id")

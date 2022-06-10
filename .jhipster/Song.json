@@ -38,16 +38,15 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Song",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [
     {
       "otherEntityName": "notes",
       "otherEntityRelationshipName": "song",
-      "ownerSide": false,
-      "relationshipName": "note",
-      "relationshipType": "one-to-one"
+      "relationshipName": "notes",
+      "relationshipType": "one-to-many"
     }
   ],
-  "service": "no"
+  "service": "serviceImpl"
 }

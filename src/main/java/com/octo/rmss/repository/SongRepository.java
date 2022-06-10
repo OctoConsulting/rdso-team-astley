@@ -15,8 +15,7 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 @Repository
 public interface SongRepository extends ReactiveCrudRepository<Song, Long>, SongRepositoryInternal {
-    @Query("SELECT * FROM song entity WHERE entity.id not in (select note_id from notes)")
-    Flux<Song> findAllWhereNoteIsNull();
+    Flux<Song> findAllBy(Pageable pageable);
 
     @Override
     <S extends Song> Mono<S> save(S entity);

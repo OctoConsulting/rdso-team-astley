@@ -9,7 +9,7 @@ export interface ISong {
   trackNumber?: number | null;
   url?: string | null;
   writer?: string | null;
-  note?: INotes | null;
+  notes?: INotes[] | null;
 }
 
 export class Song implements ISong {
@@ -22,7 +22,7 @@ export class Song implements ISong {
     public trackNumber?: number | null,
     public url?: string | null,
     public writer?: string | null,
-    public note?: INotes | null
+    public notes?: INotes[] | null
   ) {}
 }
 

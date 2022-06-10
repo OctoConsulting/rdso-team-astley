@@ -47,7 +47,7 @@
 
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refresh List</span>
       </button>
@@ -75,15 +75,15 @@
   <div class="table-responsive" id="entities" *ngIf="songs && songs.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr>
-          <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Title</span></th>
-          <th scope="col"><span>Performer</span></th>
-          <th scope="col"><span>Length</span></th>
-          <th scope="col"><span>Soundtrack</span></th>
-          <th scope="col"><span>Track Number</span></th>
-          <th scope="col"><span>Url</span></th>
-          <th scope="col"><span>Writer</span></th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="title"><span>Title</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="performer"><span>Performer</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="length"><span>Length</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="soundtrack"><span>Soundtrack</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="trackNumber"><span>Track Number</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="url"><span>Url</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="writer"><span>Writer</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -120,5 +120,23 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="songs && songs.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

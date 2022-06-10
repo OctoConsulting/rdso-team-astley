@@ -8,7 +8,12 @@
         <span>Refresh List</span>
       </button>
 
-      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-song" [routerLink]="['/song/new']">
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-song"
+        [routerLink]="['/song/new']"
+      >
         <fa-icon icon="plus"></fa-icon>
         <span> Create a new Song </span>
       </button>
@@ -48,7 +53,9 @@
           <td title="{{ song.length }}">{{ song.length }}</td>
           <td>{{ song.soundtrack }}</td>
           <td>{{ song.trackNumber }}</td>
-          <td>{{ song.url }}</td>
+          <td>
+            <button (click)="playButtonClicked(song.url)">Play</button>
+          </td>
           <td>{{ song.writer }}</td>
           <td class="text-end">
             <div class="btn-group">

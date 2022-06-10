@@ -147,6 +147,12 @@ export class SongComponent implements OnInit {
     }
   }
 
+  playButtonClicked(url: string | null | undefined): void {
+    if (_.isNull(url) || _.isUndefined(url)) {
+      return;
+    }
+    window.open(url, '_blank');
+  }
   searchSongs(): void {
     this.showResults = true;
     // add in search api

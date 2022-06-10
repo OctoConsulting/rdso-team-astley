@@ -94,7 +94,11 @@
           <td title="{{ song.length }}">{{ song.length }}</td>
           <td>{{ song.soundtrack }}</td>
           <td>{{ song.trackNumber }}</td>
-          <td>{{ song.url }}</td>
+          <td>
+            <button (click)="playButtonClicked(song.url)">
+              <fa-icon icon="play"></fa-icon>
+            </button>
+          </td>
           <td>{{ song.writer }}</td>
           <td class="text-end">
             <div class="btn-group">

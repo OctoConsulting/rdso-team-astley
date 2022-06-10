@@ -9,7 +9,6 @@ import { ISong } from '../song.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { SongService } from '../service/song.service';
 import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.component';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-song',
@@ -20,7 +19,6 @@ export class SongComponent implements OnInit {
   isLoading = false;
   model = {performer: '', writer: ''};
   showResults = false;
-  constructor(protected songService: SongService, protected modalService: NgbModal) {}
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
   page?: number;
@@ -58,7 +56,6 @@ export class SongComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAll();
     this.model.performer = '';
     this.model.writer = '';
     this.handleNavigation();

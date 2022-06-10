@@ -147,7 +147,7 @@ export class SongComponent implements OnInit {
     }
   }
 
-  playButtonClicked(url: string | null | undefined): void {
+  playButtonClicked(url: any | undefined): void {
     if (_.isNull(url) || _.isUndefined(url)) {
       return;
     }

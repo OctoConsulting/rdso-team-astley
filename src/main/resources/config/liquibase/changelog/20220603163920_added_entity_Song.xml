@@ -57,12 +57,11 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
+            <column name="writer" type="string"/>
             <column name="performer" type="string"/>
             <column name="length" type="numeric"/>
-            <column name="soundtrack" type="string"/>
-            <column name="track_number" type="numeric"/>
             <column name="url" type="string"/>
-            <column name="writer" type="string"/>
+            <column name="track_number" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -58,7 +58,6 @@ export class SongComponent implements OnInit {
   songs?: ISong[];
   standardSortSongs?: ISong[];
   isLoading = false;
-  @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
   model = { performer: '', writer: '' };
   showResults = false;
   totalItems = 0;
@@ -78,33 +77,22 @@ export class SongComponent implements OnInit {
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
-
-    this.songService.query().subscribe({
-      next: (res: HttpResponse<ISong[]>) => {
-        this.isLoading = false;
-        this.songs = res.body ?? [];
-        this.standardSortSongs = _.cloneDeep(this.songs);
-      },
-      error: () => {
-        this.isLoading = false;
-      },
-    });
-    // this.songService
-    //   .query({
-    //     page: pageToLoad - 1,
-    //     size: this.itemsPerPage,
-    //     sort: this.sort(),
-    //   })
-    //   .subscribe({
-    //     next: (res: HttpResponse<ISong[]>) => {
-    //       this.isLoading = false;
-    //       this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-    //     },
-    //     error: () => {
-    //       this.isLoading = false;
-    //       this.onError();
-    //     },
-    //   });
+    this.songService
+      .query({
+        page: pageToLoad - 1,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      })
+      .subscribe({
+        next: (res: HttpResponse<ISong[]>) => {
+          this.isLoading = false;
+          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+        },
+        error: () => {
+          this.isLoading = false;
+          this.onError();
+        },
+      });
   }
 
   ngOnInit(): void {
@@ -128,25 +116,6 @@ export class SongComponent implements OnInit {
     });
   }
 
-  onSort({ column, direction }: SortEvent): number | void {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-
-    // sorting countries
-    if (direction === '' || column === '') {
-      this.songs = _.cloneDeep(this.standardSortSongs);
-    } else {
-      this.songs = [...this.songs!].sort((a, b) => {
-        const res = compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
-    }
-  }
-
   playButtonClicked(url: any | undefined): void {
     if (_.isNull(url) || _.isUndefined(url)) {
       return;
@@ -156,21 +125,6 @@ export class SongComponent implements OnInit {
   searchSongs(): void {
     this.showResults = true;
     // add in search api
-  }
-  protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/song'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
-        },
-      });
-    }
-    this.songs = data ?? [];
-    this.ngbPaginationPage = this.page;
   }
 
   protected sort(): string[] {
@@ -196,23 +150,23 @@ export class SongComponent implements OnInit {
     });
   }
 
-  // protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-  //   this.totalItems = Number(headers.get('X-Total-Count'));
-  //   this.page = page;
-  //   if (navigate) {
-  //     this.router.navigate(['/song'], {
-  //       queryParams: {
-  //         page: this.page,
-  //         size: this.itemsPerPage,
-  //         sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
-  //       },
-  //     });
-  //   }
-  //   this.songs = data ?? [];
-  //   this.ngbPaginationPage = this.page;
-  // }
+  protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    if (navigate) {
+      this.router.navigate(['/song'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
+        },
+      });
+    }
+    this.songs = data ?? [];
+    this.ngbPaginationPage = this.page;
+  }
 
-  // protected onError(): void {
-  //   this.ngbPaginationPage = this.page ?? 1;
-  // }
+  protected onError(): void {
+    this.ngbPaginationPage = this.page ?? 1;
+  }
 }

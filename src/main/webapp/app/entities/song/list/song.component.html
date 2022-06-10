@@ -71,16 +71,24 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Title 2</span></th>
-          <th scope="col"><span>Performer</span></th>
-          <th scope="col" sortable="length" (sort)="onSort($any($event))"><span>Length</span>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col"><span>ID</span>
+          </th>
+          <th scope="col"><span>Title</span>
+          </th>
+          <th scope="col"><span>Performer</span>
+          </th>
+          <th scope="col" jhiSortBy="length"><span>Length</span>
             <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col"><span>Soundtrack</span></th>
-          <th scope="col"><span>Track Number</span></th>
-          <th scope="col"><span>Url</span></th>
-          <th scope="col"><span>Writer</span></th>
+          <th scope="col"><span>Soundtrack</span>
+          </th>
+          <th scope="col"><span>Track Number</span>
+          </th>
+          <th scope="col"><span>Url</span>
+          </th>
+          <th scope="col"><span>Writer</span>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -95,8 +103,8 @@
           <td>{{ song.soundtrack }}</td>
           <td>{{ song.trackNumber }}</td>
           <td>
-            <button (click)="playButtonClicked(song.url)">
-              <fa-icon icon="play"></fa-icon>
+            <button (click)="playButtonClicked(song.url)" style="border-style: solid; border-radius: 50%; border-color: #1a4480; background-color: #1a4480; ">
+              <fa-icon icon="play" style="color: #d9e8f6"></fa-icon>
             </button>
           </td>
           <td>{{ song.writer }}</td>

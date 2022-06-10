@@ -1,6 +1,50 @@
 <div>
   <h2 id="page-heading" data-cy="SongHeading">
     <span>Songs</span>
+    <div class="container">
+      <form>
+        <h3> Search Songs
+        </h3>
+        <div class="form-group">
+          <div class="row">
+            <div *ngIf="!model?.performer && !model?.writer" class="alert">
+              <strong>Warning!</strong> A minimum of <span class="bold">one</span> field is required
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 shift-right">
+              <label for="performer">Performer</label>
+            </div>
+            <div class="col-md-6">
+              <input name="performer" [(ngModel)]="model.performer" type="text" class="form-control" id="perfomer" title="Enter performer" placeholder="Enter performer">
+            </div>
+          </div>
+        </div><br>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3 shift-right">
+              <label for="perfomer">Writer</label>
+            </div>
+            <div class="col-md-6">
+              <input name="writer" [(ngModel)]="model.writer" type="text" class="form-control" id="writer" title="Enter writer" placeholder="Enter writer">
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row searchdiv">
+          <button [disabled]="!model?.performer && !model?.writer" class="btn btn-primary" (click)="searchSongs()" id="searchButton" title="Search songs">Search </button>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="showResults">
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">Look at all of your results! </div>
+        <div class="col-md-5"></div>
+      </div>
+    </div>
+
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">

@@ -17,6 +17,8 @@ import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.componen
 export class SongComponent implements OnInit {
   songs?: ISong[];
   isLoading = false;
+  model = {performer: '', writer: ''};
+  showResults = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
   page?: number;
@@ -54,6 +56,8 @@ export class SongComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.model.performer = '';
+    this.model.writer = '';
     this.handleNavigation();
   }
 
@@ -95,6 +99,10 @@ export class SongComponent implements OnInit {
     });
   }
 
+  searchSongs(): void{
+    this.showResults = true;
+    // add in search api
+  }
   protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;

@@ -59,6 +59,8 @@ export class SongComponent implements OnInit {
   standardSortSongs?: ISong[];
   isLoading = false;
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
+  model = { performer: '', writer: '' };
+  showResults = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
   page?: number;
@@ -106,6 +108,8 @@ export class SongComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.model.performer = '';
+    this.model.writer = '';
     this.handleNavigation();
   }
 
@@ -148,6 +152,25 @@ export class SongComponent implements OnInit {
       return;
     }
     window.open(url, '_blank');
+  }
+  searchSongs(): void {
+    this.showResults = true;
+    // add in search api
+  }
+  protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    if (navigate) {
+      this.router.navigate(['/song'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
+        },
+      });
+    }
+    this.songs = data ?? [];
+    this.ngbPaginationPage = this.page;
   }
 
   protected sort(): string[] {

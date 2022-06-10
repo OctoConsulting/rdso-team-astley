@@ -8,6 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [SharedModule, RouterModule.forChild([DASHBOARD_ROUTE]), FormsModule, ReactiveFormsModule],
-  declarations: [DashboardComponent, NgbdSortableHeader],
+  declarations: [DashboardComponent],
 })
 export class DashboardModule {}

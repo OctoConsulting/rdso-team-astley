@@ -46,22 +46,23 @@ describe('Notes Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call song query and add missing value', () => {
+    it('Should call Song query and add missing value', () => {
       const notes: INotes = { id: 456 };
       const song: ISong = { id: 37436 };
       notes.song = song;
 
       const songCollection: ISong[] = [{ id: 27282 }];
       jest.spyOn(songService, 'query').mockReturnValue(of(new HttpResponse({ body: songCollection })));
-      const expectedCollection: ISong[] = [song, ...songCollection];
+      const additionalSongs = [song];
+      const expectedCollection: ISong[] = [...additionalSongs, ...songCollection];
       jest.spyOn(songService, 'addSongToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ notes });
       comp.ngOnInit();
 
       expect(songService.query).toHaveBeenCalled();
-      expect(songService.addSongToCollectionIfMissing).toHaveBeenCalledWith(songCollection, song);
-      expect(comp.songsCollection).toEqual(expectedCollection);
+      expect(songService.addSongToCollectionIfMissing).toHaveBeenCalledWith(songCollection, ...additionalSongs);
+      expect(comp.songsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -73,7 +74,7 @@ describe('Notes Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(notes));
-      expect(comp.songsCollection).toContain(song);
+      expect(comp.songsSharedCollection).toContain(song);
     });
   });
 

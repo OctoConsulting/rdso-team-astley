@@ -27,7 +27,7 @@
             <option [ngValue]="null"></option>
             <option
               [ngValue]="songOption.id === editForm.get('song')!.value?.id ? editForm.get('song')!.value : songOption"
-              *ngFor="let songOption of songsCollection; trackBy: trackSongById"
+              *ngFor="let songOption of songsSharedCollection; trackBy: trackSongById"
             >
               {{ songOption.id }}
             </option>

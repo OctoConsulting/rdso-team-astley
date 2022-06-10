@@ -2,6 +2,7 @@ package com.octo.rmss.web.rest;
 
 import com.octo.rmss.domain.Notes;
 import com.octo.rmss.repository.NotesRepository;
+import com.octo.rmss.service.NotesService;
 import com.octo.rmss.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
@@ -27,7 +27,6 @@ import tech.jhipster.web.util.reactive.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class NotesResource {
 
     private final Logger log = LoggerFactory.getLogger(NotesResource.class);
@@ -37,9 +36,12 @@ public class NotesResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final NotesService notesService;
+
     private final NotesRepository notesRepository;
 
-    public NotesResource(NotesRepository notesRepository) {
+    public NotesResource(NotesService notesService, NotesRepository notesRepository) {
+        this.notesService = notesService;
         this.notesRepository = notesRepository;
     }
 
@@ -56,7 +58,7 @@ public class NotesResource {
         if (notes.getId() != null) {
             throw new BadRequestAlertException("A new notes cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        return notesRepository
+        return notesService
             .save(notes)
             .map(result -> {
                 try {
@@ -98,8 +100,8 @@ public class NotesResource {
                     return Mono.error(new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
                 }
 
-                return notesRepository
-                    .save(notes)
+                return notesService
+                    .update(notes)
                     .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
                     .map(result ->
                         ResponseEntity
@@ -141,19 +143,7 @@ public class NotesResource {
                     return Mono.error(new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
                 }
 
-                Mono<Notes> result = notesRepository
-                    .findById(notes.getId())
-                    .map(existingNotes -> {
-                        if (notes.getUserId() != null) {
-                            existingNotes.setUserId(notes.getUserId());
-                        }
-                        if (notes.getNote() != null) {
-                            existingNotes.setNote(notes.getNote());
-                        }
-
-                        return existingNotes;
-                    })
-                    .flatMap(notesRepository::save);
+                Mono<Notes> result = notesService.partialUpdate(notes);
 
                 return result
                     .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
@@ -174,7 +164,7 @@ public class NotesResource {
     @GetMapping("/notes")
     public Mono<List<Notes>> getAllNotes() {
         log.debug("REST request to get all Notes");
-        return notesRepository.findAll().collectList();
+        return notesService.findAll().collectList();
     }
 
     /**
@@ -184,7 +174,7 @@ public class NotesResource {
     @GetMapping(value = "/notes", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Notes> getAllNotesAsStream() {
         log.debug("REST request to get all Notes as a stream");
-        return notesRepository.findAll();
+        return notesService.findAll();
     }
 
     /**
@@ -196,7 +186,7 @@ public class NotesResource {
     @GetMapping("/notes/{id}")
     public Mono<ResponseEntity<Notes>> getNotes(@PathVariable Long id) {
         log.debug("REST request to get Notes : {}", id);
-        Mono<Notes> notes = notesRepository.findById(id);
+        Mono<Notes> notes = notesService.findOne(id);
         return ResponseUtil.wrapOrNotFound(notes);
     }
 
@@ -210,8 +200,8 @@ public class NotesResource {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public Mono<ResponseEntity<Void>> deleteNotes(@PathVariable Long id) {
         log.debug("REST request to delete Notes : {}", id);
-        return notesRepository
-            .deleteById(id)
+        return notesService
+            .delete(id)
             .map(result ->
                 ResponseEntity
                     .noContent()

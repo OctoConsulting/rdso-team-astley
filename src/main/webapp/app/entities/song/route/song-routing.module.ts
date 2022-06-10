@@ -11,6 +11,9 @@ const songRoute: Routes = [
   {
     path: '',
     component: SongComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
     canActivate: [UserRouteAccessService],
   },
   {

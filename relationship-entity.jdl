@@ -13,6 +13,34 @@ entity Notes {
     note TextBlob   
 }
 
-relationship OneToOne{
- 	Notes{song} to Song{note}
+entity Song {    
+    title String,  
+    performer String,     
+    length Duration,     
+    soundtrack String,     
+    trackNumber Integer,     
+    url String, 
+    writer String
 }
+
+entity Notes {      
+    userId UUID,        
+    note TextBlob   
+}
+
+relationship OneToMany {
+	Song{notes} to Notes
+}
+
+// Set pagination options
+paginate Song with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
+

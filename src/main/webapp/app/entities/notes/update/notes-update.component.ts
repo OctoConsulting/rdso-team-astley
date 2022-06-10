@@ -20,7 +20,7 @@ import { SongService } from 'app/entities/song/service/song.service';
 export class NotesUpdateComponent implements OnInit {
   isSaving = false;
 
-  songsCollection: ISong[] = [];
+  songsSharedCollection: ISong[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -106,15 +106,15 @@ export class NotesUpdateComponent implements OnInit {
       song: notes.song,
     });
 
-    this.songsCollection = this.songService.addSongToCollectionIfMissing(this.songsCollection, notes.song);
+    this.songsSharedCollection = this.songService.addSongToCollectionIfMissing(this.songsSharedCollection, notes.song);
   }
 
   protected loadRelationshipsOptions(): void {
     this.songService
-      .query({ filter: 'note-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<ISong[]>) => res.body ?? []))
       .pipe(map((songs: ISong[]) => this.songService.addSongToCollectionIfMissing(songs, this.editForm.get('song')!.value)))
-      .subscribe((songs: ISong[]) => (this.songsCollection = songs));
+      .subscribe((songs: ISong[]) => (this.songsSharedCollection = songs));
   }
 
   protected createFromForm(): INotes {

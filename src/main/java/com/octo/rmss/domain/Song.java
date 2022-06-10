@@ -3,6 +3,8 @@ package com.octo.rmss.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -42,7 +44,8 @@ public class Song implements Serializable {
     private String writer;
 
     @Transient
-    private Notes note;
+    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
+    private Set<Notes> notes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -150,22 +153,34 @@ public class Song implements Serializable {
         this.writer = writer;
     }
 
-    public Notes getNote() {
-        return this.note;
+    public Set<Notes> getNotes() {
+        return this.notes;
     }
 
-    public void setNote(Notes notes) {
-        if (this.note != null) {
-            this.note.setSong(null);
+    public void setNotes(Set<Notes> notes) {
+        if (this.notes != null) {
+            this.notes.forEach(i -> i.setSong(null));
         }
         if (notes != null) {
-            notes.setSong(this);
+            notes.forEach(i -> i.setSong(this));
         }
-        this.note = notes;
+        this.notes = notes;
     }
 
-    public Song note(Notes notes) {
-        this.setNote(notes);
+    public Song notes(Set<Notes> notes) {
+        this.setNotes(notes);
+        return this;
+    }
+
+    public Song addNotes(Notes notes) {
+        this.notes.add(notes);
+        notes.setSong(this);
+        return this;
+    }
+
+    public Song removeNotes(Notes notes) {
+        this.notes.remove(notes);
+        notes.setSong(null);
         return this;
     }
 

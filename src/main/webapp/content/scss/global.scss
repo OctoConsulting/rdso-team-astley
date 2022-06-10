@@ -237,6 +237,7 @@ label{
 
 .shift-right{
   text-align: right;
+  padding-bottom: 1rem;
 }
 
 .alert{
@@ -248,3 +249,16 @@ label{
 .container{
   padding-bottom: 4rem;
 }
+
+.searchdiv{
+  padding: 0 45%!important;
+}
+@media (min-width:480px)  {
+  .shift-right{
+    text-align: left;
+  }
+  .searchdiv{
+    padding: 0 10px;
+  }
+}
+

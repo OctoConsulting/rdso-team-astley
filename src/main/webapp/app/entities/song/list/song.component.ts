@@ -15,7 +15,7 @@ export class SongComponent implements OnInit {
   songs?: ISong[];
   isLoading = false;
   model = {performer: '', writer: ''};
-
+  showResults = false;
   constructor(protected songService: SongService, protected modalService: NgbModal) {}
 
   loadAll(): void {
@@ -51,5 +51,10 @@ export class SongComponent implements OnInit {
         this.loadAll();
       }
     });
+  }
+
+  searchSongs(): void{
+    this.showResults = true;
+    // add in search api
   }
 }

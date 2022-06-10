@@ -1,11 +1,4 @@
 id;user_id;note;song_id
-1;9e2ea52b-7240-4616-840b-cdf10d685c04;../fake-data/blob/hipster.txt;1
-2;c74bfa1a-c579-4992-9709-4aefad2af1ae;../fake-data/blob/hipster.txt;1
-3;d16c52e6-63ab-4462-b8bb-b52ce291d3e7;../fake-data/blob/hipster.txt;1
-4;ee7b3ab4-5a91-4189-8b15-cbbf742bd891;../fake-data/blob/hipster.txt;1
-5;0f0bd91f-b1f9-443a-8c77-6b1fc5de8dea;../fake-data/blob/hipster.txt;1
-6;95b9c546-a5d6-4f45-83de-e644c5bb53b0;../fake-data/blob/hipster.txt;1
-7;51b7d2f5-ecd7-4e7d-945f-16fdcd910b1e;../fake-data/blob/hipster.txt;1
-8;ebc17e1d-05c1-4eb4-bde0-e59ba9513ee7;../fake-data/blob/hipster.txt;1
-9;329f4014-bab3-4b2e-8656-f623c7426aaf;../fake-data/blob/hipster.txt;1
-10;ef15c62f-ccac-4ea5-a88d-76ef25a04d94;../fake-data/blob/hipster.txt;2
+1;9e2ea52b-7240-4616-840b-cdf10d685c04;The Power of Love is my favorite song, because it makes me feel alive;1
+2;c74bfa1a-c579-4992-9709-4aefad2af1ae;The Power of Love is still my favorite song;1
+3;ef15c62f-ccac-4ea5-a88d-76ef25a04d94;Time bomb town used to be my favorite at one point in my life;2

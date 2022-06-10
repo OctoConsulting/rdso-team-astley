@@ -124,6 +124,25 @@ export class SongComponent implements OnInit {
     });
   }
 
+  onSort({ column, direction }: SortEvent): number | void {
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // sorting countries
+    if (direction === '' || column === '') {
+      this.songs = _.cloneDeep(this.standardSortSongs);
+    } else {
+      this.songs = [...this.songs!].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {
@@ -147,23 +166,6 @@ export class SongComponent implements OnInit {
     });
   }
 
-  onSort({ column, direction }: SortEvent): number | void {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-
-    // sorting countries
-    if (direction === '' || column === '') {
-      this.songs = _.cloneDeep(this.standardSortSongs);
-    } else {
-      this.songs = [...this.songs!].sort((a, b) => {
-        const res = compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
-    }
   // protected onSuccess(data: ISong[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
   //   this.totalItems = Number(headers.get('X-Total-Count'));
   //   this.page = page;

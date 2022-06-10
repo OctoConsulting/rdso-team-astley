@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Writer</th>
+      <th scope="col">Performer</th>
+      <th scope="col" sortable="length" (sort)="onSort($any($event))">Length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let song of songs">
+      <th scope="row">{{ song.number }}</th>
+      <td>{{ song.title }}</td>
+      <td>{{ song.writer }}</td>
+      <td>{{ song.performer }}</td>
+      <td>{{ song.length }}</td>
+    </tr>
+  </tbody>
+</table>

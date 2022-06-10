@@ -180,38 +180,6 @@ class SongResourceIT {
     }
 
     @Test
-    void getAllSongsAsStream() {
-        // Initialize the database
-        songRepository.save(song).block();
-
-        List<Song> songList = webTestClient
-            .get()
-            .uri(ENTITY_API_URL)
-            .accept(MediaType.APPLICATION_NDJSON)
-            .exchange()
-            .expectStatus()
-            .isOk()
-            .expectHeader()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_NDJSON)
-            .returnResult(Song.class)
-            .getResponseBody()
-            .filter(song::equals)
-            .collectList()
-            .block(Duration.ofSeconds(5));
-
-        assertThat(songList).isNotNull();
-        assertThat(songList).hasSize(1);
-        Song testSong = songList.get(0);
-        assertThat(testSong.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testSong.getPerformer()).isEqualTo(DEFAULT_PERFORMER);
-        assertThat(testSong.getLength()).isEqualTo(DEFAULT_LENGTH);
-        assertThat(testSong.getSoundtrack()).isEqualTo(DEFAULT_SOUNDTRACK);
-        assertThat(testSong.getTrackNumber()).isEqualTo(DEFAULT_TRACK_NUMBER);
-        assertThat(testSong.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testSong.getWriter()).isEqualTo(DEFAULT_WRITER);
-    }
-
-    @Test
     void getAllSongs() {
         // Initialize the database
         songRepository.save(song).block();

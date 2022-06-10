@@ -24,11 +24,10 @@
   "relationships": [
     {
       "otherEntityName": "song",
-      "otherEntityRelationshipName": "note",
-      "ownerSide": true,
+      "otherEntityRelationshipName": "notes",
       "relationshipName": "song",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     }
   ],
-  "service": "no"
+  "service": "serviceImpl"
 }
